@@ -6,6 +6,15 @@
 - [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 
+## Note on the directory name (`.infrastructure` vs `infrastructure`)
+
+The task description mentions `./infrastructure/ingress`, but this is a typo in the README. In this repository the directory is named **`.infrastructure`** (with a leading dot), and this is the only directory that exists in the repo:
+
+- `bootstrap.sh` (provided with the task) applies every manifest from `.infrastructure/...` (MySQL, app, and Ingress).
+- The existing manifests (`.infrastructure/app/`, `.infrastructure/mysql/`) already live there.
+
+The Ingress is therefore placed at **`.infrastructure/ingress/ingress.yml`**, next to the other manifests, so that `bootstrap.sh` finds and applies it. Creating a separate `infrastructure/` directory would make `bootstrap.sh` fail with "path does not exist" and the Ingress would not be deployed.
+
 ## 1. Create the cluster
 
 ```
